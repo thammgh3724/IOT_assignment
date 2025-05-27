@@ -5,6 +5,7 @@ Adafruit_NeoPixel pixels(NUMPIXELS, PIXEL_PIN, NEO_GRB + NEO_KHZ800);
 void init_hardware() {
     pinMode(LED_PIN, OUTPUT);
     pinMode(FAN_PIN, OUTPUT);
+    pinMode(PIR_PIN, INPUT);
     pixels.begin();
     delay(1000);
     turn_off_led();
@@ -31,4 +32,8 @@ void turn_on_pixel() {
     pixels.setPixelColor(2, pixels.Color(0, 150, 0));
     pixels.setPixelColor(3, pixels.Color(0, 150, 0));
     pixels.show();
+}
+
+int read_pir() {
+    return digitalRead(PIR_PIN);
 }

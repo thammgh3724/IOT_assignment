@@ -8,6 +8,8 @@
 #define PIXEL_PIN 8
 #define NUMPIXELS 4
 
+#define PIR_PIN 10
+
 #define SDA_PIN 11
 #define SCL_PIN 12
 
@@ -22,3 +24,5 @@ void turn_on_fan();
 void turn_off_fan();
 
 void turn_on_pixel();
+
+int read_pir();

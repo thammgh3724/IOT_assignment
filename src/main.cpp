@@ -100,6 +100,15 @@ void DHT20Task(void *pvParameters) {
   vTaskDelete(NULL);  // Delete the task when done
 }
 
+void checkPirTask(void *pvParameters) {
+  while(1) {
+    int pir_value = read_pir();
+    Serial.print("PIR Value: ");
+    Serial.print(pir_value);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+  }
+}
+
 void setup() {
   // Initalize serial connection for debugging
   Serial.begin(115200);
@@ -118,6 +127,7 @@ void setup() {
 
   xTaskCreate(ledBlinkTask, "ledBlinkTask", 4096, NULL, 1, NULL);
   xTaskCreate(InitWiFiTask, "InitWiFiTask", 4096, NULL, 1, NULL);
+  xTaskCreate(checkPirTask, "checkPirTask", 4096, NULL, 1, NULL);
 
   turn_on_pixel();
   
