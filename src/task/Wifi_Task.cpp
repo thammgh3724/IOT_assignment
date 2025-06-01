@@ -25,7 +25,7 @@ bool wifi_need_reconnect()
 }
 
 // Task to handle Wi-Fi connection
-void init(void *pvParameters)
+void wifi_init(void *pvParameters)
 {
     while (true)
     {
@@ -45,5 +45,5 @@ void init(void *pvParameters)
 void wifi_task()
 {
     wifi_connect();
-    xTaskCreate(init, "WiFi_Task", 4096, NULL, 1, NULL);
+    xTaskCreate(wifi_init, "WiFi_Task", 4096, NULL, 1, NULL);
 }

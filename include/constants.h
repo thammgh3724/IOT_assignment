@@ -4,13 +4,17 @@
 #include <cstdint>
 #include <array>
 
-#define DEVICE_TOKEN "53X1u0UUctftcuhdD5Eb"
+#define DHT_SDA 8     // Sensor DHT
+#define DHT_SCL 7      // Sensor DHT
+
+
+#define DEVICE_TOKEN "wbhpocw2uo37sartan4h"
 
 #define THINGSBOARD_SERVER "app.coreiot.io"
 #define THINGSBOARD_PORT 1883U
 
-#define WIFI_SSID "QuocPhong"
-#define WIFI_PASSWORD "quocphong2003"
+#define WIFI_SSID "Home Coffee 2"
+#define WIFI_PASSWORD "hihomies"
 
 #define MY_BOARD "ESP32-S3"
 #define MY_VERSION "1.0.0"

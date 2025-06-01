@@ -1,9 +1,10 @@
-#ifndef CONNECT_TASK_
-#define CONNECT_TASK_
+#ifndef CONNECT_TASK_H
+#define CONNECT_TASK_H
 
 #include "global.h"
 #include "Wifi_Task.h"
 #include "Thingsboard_Task.h"
+
 extern Arduino_MQTT_Client mqttClient;
 // THINGSBOARD
 extern ThingsBoard tbClient;

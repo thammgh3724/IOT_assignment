@@ -14,7 +14,7 @@ void sendTelemetry(const String &data)
 {
     tbClient.sendTelemetryString(data.c_str());
 }
-void init(void *pvParameters)
+void thingsboard_init(void *pvParameters)
 {
     while (true)
     {
@@ -53,5 +53,5 @@ void init(void *pvParameters)
 
 void thingsboard_task()
 {
-    xTaskCreate(init, "ThingsBoard_Task_Init", 4096, NULL, 1, NULL);
+    xTaskCreate(thingsboard_init, "ThingsBoard_Task_Init", 4096, NULL, 1, NULL);
 }
