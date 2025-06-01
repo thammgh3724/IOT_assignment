@@ -1,0 +1,49 @@
+
+#ifndef CONSTANT_H_
+#define CONSTANT_H_
+#include <cstdint>
+#include <array>
+
+#define DEVICE_TOKEN "53X1u0UUctftcuhdD5Eb"
+
+#define THINGSBOARD_SERVER "app.coreiot.io"
+#define THINGSBOARD_PORT 1883U
+
+#define WIFI_SSID "QuocPhong"
+#define WIFI_PASSWORD "quocphong2003"
+
+#define MY_BOARD "ESP32-S3"
+#define MY_VERSION "1.0.0"
+
+constexpr uint16_t MAX_MESSAGE_SEND_SIZE = 512U;
+constexpr uint16_t MAX_MESSAGE_RECEIVE_SIZE = 512U;
+constexpr uint8_t MAX_APIS = 5U;
+
+// RPC //
+// https://github.com/thingsboard/thingsboard-client-sdk/tree/master/examples/0010-esp8266_esp32_rpc
+constexpr uint8_t MAX_RPC_SUBSCRIPTIONS = 9U;
+constexpr uint8_t MAX_RPC_RESPONSE = 5U;
+
+// EXAMPLE RPC
+constexpr const char RPC_SWITCH_CONTROL[] = "switch_control";
+
+/* OTA */
+// https://github.com/thingsboard/thingsboard-client-sdk/tree/master/examples/0009-esp8266_esp32_process_OTA_MQTT
+constexpr char CURRENT_FIRMWARE_TITLE[] = MY_BOARD;
+constexpr char CURRENT_FIRMWARE_VERSION[] = MY_VERSION;
+constexpr uint8_t FIRMWARE_FAILURE_RETRIES = 12U;
+constexpr uint16_t FIRMWARE_PACKET_SIZE = 16384U;
+
+/* SHARED ATTRIBUTES */
+// https://github.com/thingsboard/thingsboard-client-sdk/blob/master/examples/0006-esp8266_esp32_process_shared_attribute_update
+// EXAMPLE constexpr const char RELAY_1_STATUS[] = "relay_1_status";
+constexpr uint8_t MAX_ATTRIBUTES_SUBSCRIPTIONS = 1U;
+constexpr uint8_t MAX_ATTRIBUTES = 10U;
+constexpr std::array<const char *, MAX_ATTRIBUTES> SHARED_ATTRIBUTES_LIST = {};
+
+constexpr std::array<const char *, MAX_ATTRIBUTES> REQUESTED_SHARED_ATTRIBUTES = {};
+
+
+
+constexpr uint64_t REQUEST_TIMEOUT_MICROSECONDS = 20000U * 1000U;
+#endif
