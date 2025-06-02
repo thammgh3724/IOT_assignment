@@ -4,8 +4,17 @@
 #include <cstdint>
 #include <array>
 
-#define DHT_SDA 8     // Sensor DHT
-#define DHT_SCL 7      // Sensor DHT
+#define LED_PIN 48
+
+#define FAN_PIN 6
+
+#define PIXEL_PIN 8
+#define NUMPIXELS 4
+
+#define PIR_PIN 10
+
+#define DHT_SDA 11     // Sensor DHT
+#define DHT_SCL 12      // Sensor DHT
 
 
 #define DEVICE_TOKEN "wbhpocw2uo37sartan4h"
@@ -16,8 +25,8 @@
 #define WIFI_SSID "Home Coffee 2"
 #define WIFI_PASSWORD "hihomies"
 
-#define MY_BOARD "ESP32-S3"
-#define MY_VERSION "1.0.0"
+#define MY_BOARD "YOLO-UNO"
+#define MY_VERSION "1.0.1"
 
 constexpr uint16_t MAX_MESSAGE_SEND_SIZE = 512U;
 constexpr uint16_t MAX_MESSAGE_RECEIVE_SIZE = 512U;

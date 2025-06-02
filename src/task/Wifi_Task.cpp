@@ -8,12 +8,15 @@ void wifi_connect()
     while (WiFi.status() != WL_CONNECTED)
     {
         // Print status
-        ESP_LOGI("WIFI", "WiFi Status: %d ", WiFi.status());
+        // ESP_LOGI("WIFI", "WiFi Status: %d ", WiFi.status());
+        Serial.printf("WiFi Status: %d ", WiFi.status());
         delay(1000);
     }
 
-    ESP_LOGI("WIFI", "Connected to SSID: %s", WIFI_SSID);
-    ESP_LOGI("WIFI", "IP Address: %s", WiFi.localIP().toString().c_str());
+    // ESP_LOGI("WIFI", "Connected to SSID: %s", WIFI_SSID);
+    Serial.printf("WIFI Connected to SSID: %s", WIFI_SSID);
+    // ESP_LOGI("WIFI", "IP Address: %s", WiFi.localIP().toString().c_str());
+    Serial.printf("WIFI IP Address: %s", WiFi.localIP().toString().c_str());
 }
 
 bool wifi_need_reconnect()

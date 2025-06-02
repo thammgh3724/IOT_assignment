@@ -29,10 +29,12 @@ bool shared_attributes_setup()
 {
     if (!shared_attributes.Shared_Attributes_Subscribe(callback))
     {
-        ESP_LOGE("SHARED_ATTR", "Failed to subscribe to shared attributes");
+        // ESP_LOGE("SHARED_ATTR", "Failed to subscribe to shared attributes");
+        Serial.println("SHARED_ATTR : Failed to subscribe to shared attributes");
         return false;
     }
-    ESP_LOGI("SHARED_ATTR", "Subscribed to shared attributes");
+    // ESP_LOGI("SHARED_ATTR", "Subscribed to shared attributes");
+    Serial.println("SHARED_ATTR : Subscribed to shared attributes");
     return true;
 }
 
