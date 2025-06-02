@@ -11,6 +11,8 @@
 #define PIXEL_PIN 8
 #define NUMPIXELS 4
 
+#define RELAY_PIN 18
+
 #define PIR_PIN 10
 
 #define DHT_SDA 11     // Sensor DHT
