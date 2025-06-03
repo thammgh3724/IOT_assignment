@@ -5,7 +5,8 @@
 #include <SPI.h>
 #include <MFRC522.h>
 
-extern byte door1_uid[4];
+extern const char *room1_attr_name;
+extern std::vector<String> room1_allowedUIDs;
 
 void rfid_init();
 

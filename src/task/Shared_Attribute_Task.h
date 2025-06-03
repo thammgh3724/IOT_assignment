@@ -15,7 +15,7 @@ void processClientAttributeRequest(const JsonObjectConst &data);
 
 void processSharedAttributeRequest(const JsonObjectConst &data);
 
-void request_shared_attributes();
+bool request_shared_attributes();
 bool request_client_attributes();
 
 

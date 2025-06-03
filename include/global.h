@@ -28,6 +28,7 @@
 #include "device/DHT20.h"
 #include "device/LedFanRelay.h"
 #include "device/PIR.h"
+#include "device/RFID_Task.h"
 #include "HardwareSerial.h"
 // #include "SoftwareSerial.h"
 #include "Adafruit_NeoPixel.h"
@@ -49,6 +50,7 @@
 // Global constants and structs
 #include "constants.h"
 #include "../src/task/Connect_Task.h"
+#include "../src/task/LightAuto_Task.h"
 // Include configs
 
 #endif

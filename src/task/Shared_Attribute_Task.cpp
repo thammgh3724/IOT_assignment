@@ -6,6 +6,41 @@ void requestTimedOut()
     Serial.printf("Attribute request timed out did not receive a response in (%llu) microseconds. Ensure client is connected to the MQTT broker and that the keys actually exist on the target device\n", REQUEST_TIMEOUT_MICROSECONDS);
 }
 
+void processRoom1Card(const JsonObjectConst &data) {
+    JsonObjectConst roomData = data[room1_attr_name];
+    if (roomData.isNull()) {
+        Serial.println("Ivalid Data");
+        return;
+    }
+
+    if (!roomData.containsKey("rfid_access")) {
+        Serial.println("No rfid_access field in attribute.");
+        return;
+    }
+
+    room1_allowedUIDs.clear();
+    JsonArrayConst rfidArray = roomData["rfid_access"];
+    for (JsonVariantConst uidVal : rfidArray) {
+        String uidStr = uidVal.as<String>();
+        room1_allowedUIDs.push_back(uidStr);
+        Serial.println("Allowed UID: " + uidStr);
+    }
+}
+
+void processLightAuto(const JsonObjectConst &data) {
+    bool state = data["light_auto"];
+    Serial.print("Light Auto status: ");
+    Serial.println(state ? "ON" : "OFF");
+    if (state) {
+        light_auto_state = 1;
+        Serial.println("Turn on Light Auto feature");
+    }
+    else {
+        light_auto_state = 0;
+        Serial.println("Turn off Light Auto feature");
+    }
+}
+
 void processSharedAttributeUpdate(const JsonObjectConst &data)
 {
 
@@ -13,6 +48,17 @@ void processSharedAttributeUpdate(const JsonObjectConst &data)
     {
         Serial.println(it->key().c_str());
         Serial.println(it->value().as<const char *>());
+        const char *key = it->key().c_str();
+        if (strcmp(key, room1_attr_name) == 0) {
+            processRoom1Card(data);
+        }
+        else if (strcmp(key, "light_auto") == 0) {
+            processLightAuto(data);
+        }
+        else{
+            Serial.println("Invalid Attribute.");
+            return;
+        }
     }
 
     const size_t jsonSize = Helper::Measure_Json(data);
@@ -58,7 +104,7 @@ void processClientAttributeRequest(const JsonObjectConst &data)
             else {
                 turn_off_pixel();
                 Serial.println("Turn off pixel");
-    }
+            }
         }
         else if (strcmp(key, "door_status") == 0)
         {
@@ -116,6 +162,17 @@ void processSharedAttributeRequest(const JsonObjectConst &data)
         Serial.println(it->key().c_str());
         // Shared attributes have to be parsed by their type.
         Serial.println(it->value().as<const char *>());
+        const char *key = it->key().c_str();
+        if (strcmp(key, room1_attr_name) == 0) {
+            processRoom1Card(data);
+        }
+        else if (strcmp(key, "light_auto") == 0) {
+            processLightAuto(data);
+        }
+        else{
+            Serial.println("Invalid Attribute.");
+            return;
+        }
     }
     const size_t jsonSize = Helper::Measure_Json(data);
     char buffer[jsonSize];
@@ -123,7 +180,7 @@ void processSharedAttributeRequest(const JsonObjectConst &data)
     Serial.println(buffer);
 }
 
-void request_shared_attributes()
+bool request_shared_attributes()
 {
     Serial.println("Requesting shared attributes...");
     // Shared attributes we want to request from the server
@@ -133,4 +190,5 @@ void request_shared_attributes()
     {
         Serial.println("Failed to request shared attributes");
     }
+    return requestedShared;
 }

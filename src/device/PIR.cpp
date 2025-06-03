@@ -7,14 +7,7 @@ int read_pir() {
 void pir_task(void *pvParameters)
 {
     pinMode(PIR_PIN, INPUT);
-
-    while (true)
-    {
-        int pir_value = read_pir();
-        Serial.printf("PIR Value: %d", pir_value);
-        Serial.println("");
-        vTaskDelay(5000 / portTICK_PERIOD_MS);
-    }
+    vTaskDelete(NULL); // Delete the task when done
 }
 
 

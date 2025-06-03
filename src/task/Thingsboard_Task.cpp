@@ -53,6 +53,10 @@ void thingsboard_init(void *pvParameters)
         {
             requested_client_attributes = request_client_attributes();
         }
+        if (!requested_shared_attributes)
+        {
+            requested_shared_attributes = request_shared_attributes();
+        }
         tbClient.loop();
     }
 }

@@ -1,6 +1,21 @@
 #include "RFID_Task.h"
 MFRC522 rfid(SDA_PIN, RST_PIN);
-byte door1_uid[4] = {0x37, 0x11, 0x15, 0x05};
+
+const char *room1_attr_name = "valid_card_e1_01";
+std::vector<String> room1_allowedUIDs;
+
+String getUIDString()
+{
+    String uidStr = "";
+    for (byte i = 0; i < rfid.uid.size; i++)
+    {
+        if (rfid.uid.uidByte[i] < 0x10)
+            uidStr += "0";  // Thêm số 0 phía trước nếu < 0x10
+        uidStr += String(rfid.uid.uidByte[i], HEX);
+    }
+    uidStr.toUpperCase();
+    return uidStr;
+}
 
 void rfid_task(void *pvParameters)
 {
@@ -12,29 +27,17 @@ void rfid_task(void *pvParameters)
         }
         else
         {
-            // Print card UID
-            Serial.print("Card UID: ");
-            for (byte i = 0; i < rfid.uid.size; i++)
-            {
-                Serial.print(rfid.uid.uidByte[i] < 0x10 ? " 0" : " ");
-                Serial.print(rfid.uid.uidByte[i], HEX);
-            }
-            Serial.println();
+            String scannedUID = getUIDString();
+            Serial.print("Scanned UID: ");
+            Serial.println(scannedUID);
             // Compare UID
-            bool matched = true;
-            if (rfid.uid.size != 4)
+            bool matched = false;
+            for (const auto &validUID : room1_allowedUIDs)
             {
-                matched = false;
-            }
-            else
-            {
-                for (byte i = 0; i < 4; i++)
+                if (scannedUID.equalsIgnoreCase(validUID))
                 {
-                    if (rfid.uid.uidByte[i] != door1_uid[i])
-                    {
-                        matched = false;
-                        break;
-                    }
+                    matched = true;
+                    break;
                 }
             }
 
