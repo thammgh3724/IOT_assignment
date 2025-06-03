@@ -1,5 +1,5 @@
 #include "Shared_Attribute_Task.h"
-const std::vector<const char *> REQUESTED_CLIENT_ATTRIBUTES = {};
+const std::vector<const char *> REQUESTED_CLIENT_ATTRIBUTES = {"light_status","door_status","fan_status"};
 
 void requestTimedOut()
 {
@@ -38,13 +38,61 @@ bool shared_attributes_setup()
     return true;
 }
 
-void processRelay(const JsonObjectConst &data)
-{
-
-}
 void processClientAttributeRequest(const JsonObjectConst &data)
 {
-    processRelay(data); 
+    for (auto it = data.begin(); it != data.end(); ++it)
+    {
+        Serial.println(it->key().c_str());
+        // Shared attributes have to be parsed by their type.
+        Serial.println(it->value().as<const char *>());
+        const char *key = it->key().c_str();
+        if (strcmp(key, "light_status") == 0)
+        {
+            bool state = it->value().as<bool>();
+            Serial.print("Light status: ");
+            Serial.println(state ? "ON" : "OFF");
+            if (state) {
+                turn_on_pixel();
+                Serial.println("Turn on pixel");
+            }
+            else {
+                turn_off_pixel();
+                Serial.println("Turn off pixel");
+    }
+        }
+        else if (strcmp(key, "door_status") == 0)
+        {
+            bool state = it->value().as<bool>();
+            Serial.print("Door status: ");
+            Serial.println(state ? "ON" : "OFF");
+            if (state) {
+                turn_on_relay();
+                Serial.println("Turn on relay");
+            }
+            else {
+                turn_off_relay();
+                Serial.println("Turn off relay");
+            }
+        }
+        else if (strcmp(key, "fan_status") == 0)
+        {
+            bool state = it->value().as<bool>();
+            Serial.print("Fan status: ");
+            Serial.println(state ? "ON" : "OFF");
+            if (state) {
+                turn_on_fan();
+                Serial.println("Turn on fan");
+            }
+            else {
+                turn_off_fan();
+                Serial.println("Turn off fan");
+            }
+        }
+    }
+    const size_t jsonSize = Helper::Measure_Json(data);
+    char buffer[jsonSize];
+    serializeJson(data, buffer, jsonSize);
+    Serial.println(buffer);
 }
 
 

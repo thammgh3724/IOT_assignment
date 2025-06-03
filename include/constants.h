@@ -19,11 +19,11 @@
 #define DHT_SCL 12      // Sensor DHT
 
 
-#define MOSI_PIN 5
-#define MISO_PIN 6
-#define RST_PIN 7
-#define SDA_PIN 8
-#define SCK_PIN 9
+#define MOSI_PIN 17
+#define MISO_PIN 21
+#define RST_PIN 38
+#define SDA_PIN 47
+#define SCK_PIN 48
 
 
 #define DEVICE_TOKEN "wbhpocw2uo37sartan4h"
@@ -33,8 +33,8 @@
 
 // #define WIFI_SSID "Home Coffee 2"
 // #define WIFI_PASSWORD "hihomies"
-#define WIFI_SSID "QuocPhong"
-#define WIFI_PASSWORD "quocphong2003"
+#define WIFI_SSID "Vu Van Binh"
+#define WIFI_PASSWORD "BITHANNG"
 
 #define MY_BOARD "YOLO-UNO"
 #define MY_VERSION "1.0.1"
@@ -49,7 +49,9 @@ constexpr uint8_t MAX_RPC_SUBSCRIPTIONS = 9U;
 constexpr uint8_t MAX_RPC_RESPONSE = 5U;
 
 // EXAMPLE RPC
-constexpr const char RPC_SWITCH_CONTROL[] = "switch_control";
+constexpr const char RPC_LIGHT_CONTROL[] = "light_control";
+constexpr const char RPC_DOOR_CONTROL[] = "door_control";
+constexpr const char RPC_FAN_CONTROL[] = "fan_control";
 
 /* OTA */
 // https://github.com/thingsboard/thingsboard-client-sdk/tree/master/examples/0009-esp8266_esp32_process_OTA_MQTT

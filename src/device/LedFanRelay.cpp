@@ -1,19 +1,27 @@
 #include "LedFanRelay.h"
 
 Adafruit_NeoPixel pixels(NUMPIXELS, PIXEL_PIN, NEO_GRB + NEO_KHZ800);
+int led_state = 0;
+int fan_state = 0;
+int pixel_state = 0;
+int relay_state = 0;
 
 void turn_on_led() {
   digitalWrite(LED_PIN, HIGH);
+  led_state = 1;
 }
 void turn_off_led() {
   digitalWrite(LED_PIN, LOW);
+  led_state = 0;
 }
 
 void turn_on_fan() {
   digitalWrite(FAN_PIN, HIGH);
+  fan_state = 1;
 }
 void turn_off_fan() {
   digitalWrite(FAN_PIN, LOW);
+  fan_state = 0;
 }
 
 void turn_on_pixel() {
@@ -22,17 +30,22 @@ void turn_on_pixel() {
   pixels.setPixelColor(2, pixels.Color(0, 150, 0));
   pixels.setPixelColor(3, pixels.Color(0, 150, 0));
   pixels.show();
+  pixel_state = 1;
 }
 
 void turn_off_pixel() {
   pixels.clear();
+  pixels.show();
+  pixel_state = 0;
 }
 
 void turn_on_relay() {
   digitalWrite(RELAY_PIN, HIGH);
+  relay_state = 1;
 }
 void turn_off_relay() {
   digitalWrite(RELAY_PIN, LOW);
+  relay_state = 0;
 }
 
 void ledFanRelay_init_task(void *pvParameters){
@@ -47,8 +60,6 @@ void ledFanRelay_init_task(void *pvParameters){
   vTaskDelete(NULL); // Delete the task when done
 }
 
-int led_state = 0;
-
 void led_blink_task(void *pvParameters)
 {
   while (1)
@@ -61,7 +72,6 @@ void led_blink_task(void *pvParameters)
     {
       turn_off_led();
     }
-    led_state = 1 - led_state;
     vTaskDelay(1000 / portTICK_PERIOD_MS);
   }
 }

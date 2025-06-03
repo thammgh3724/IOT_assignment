@@ -1,5 +1,7 @@
 #include "RFID_Task.h"
 MFRC522 rfid(SDA_PIN, RST_PIN);
+byte door1_uid[4] = {0x37, 0x11, 0x15, 0x05};
+
 void rfid_task(void *pvParameters)
 {
     while (true)
@@ -18,6 +20,34 @@ void rfid_task(void *pvParameters)
                 Serial.print(rfid.uid.uidByte[i], HEX);
             }
             Serial.println();
+            // Compare UID
+            bool matched = true;
+            if (rfid.uid.size != 4)
+            {
+                matched = false;
+            }
+            else
+            {
+                for (byte i = 0; i < 4; i++)
+                {
+                    if (rfid.uid.uidByte[i] != door1_uid[i])
+                    {
+                        matched = false;
+                        break;
+                    }
+                }
+            }
+
+            if (matched)
+            {
+                Serial.println("Valid UID. Open Door...");
+                turn_on_relay();
+                sendBoolTelemetry("door_status", true);
+            }
+            else
+            {
+                Serial.println("Invalid UID");
+            }
             rfid.PICC_HaltA();
         }
     }

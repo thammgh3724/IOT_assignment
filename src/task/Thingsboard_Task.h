@@ -8,5 +8,6 @@
 
 void sendTelemetry(const String &data);
 void sendAttribute(const String &data);
+void sendBoolTelemetry(const String &data, bool state);
 void thingsboard_task();
 #endif

@@ -3,6 +3,7 @@
 bool ota_subscribed = false;
 bool rpc_subscribed = false;
 bool shared_attributes_subscribed = false;
+bool requested_shared_attributes = false;
 bool requested_client_attributes = false;
 
 
@@ -13,6 +14,10 @@ void sendAttribute(const String &data)
 void sendTelemetry(const String &data)
 {
     tbClient.sendTelemetryString(data.c_str());
+}
+void sendBoolTelemetry(const String &key, bool state)
+{
+    tbClient.sendAttributeData(key.c_str(), state);
 }
 void thingsboard_init(void *pvParameters)
 {

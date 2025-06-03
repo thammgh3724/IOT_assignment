@@ -3,6 +3,11 @@
 
 #include "global.h"
 
+extern int led_state;
+extern int fan_state;
+extern int pixel_state;
+extern int relay_state;
+
 void ledFanRelay_init();
 
 void turn_on_led();
