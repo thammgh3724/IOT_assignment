@@ -8,13 +8,22 @@
 #define DHT_SCL 7      // Sensor DHT
 
 
+#define MOSI_PIN 5
+#define MISO_PIN 6
+#define RST_PIN 7
+#define SDA_PIN 8
+#define SCK_PIN 9
+
+
 #define DEVICE_TOKEN "wbhpocw2uo37sartan4h"
 
 #define THINGSBOARD_SERVER "app.coreiot.io"
 #define THINGSBOARD_PORT 1883U
 
-#define WIFI_SSID "Home Coffee 2"
-#define WIFI_PASSWORD "hihomies"
+// #define WIFI_SSID "Home Coffee 2"
+// #define WIFI_PASSWORD "hihomies"
+#define WIFI_SSID "QuocPhong"
+#define WIFI_PASSWORD "quocphong2003"
 
 #define MY_BOARD "ESP32-S3"
 #define MY_VERSION "1.0.0"
