@@ -27,7 +27,8 @@ void thingsboard_init(void *pvParameters)
         {
             while (!tbClient.connect(THINGSBOARD_SERVER, DEVICE_TOKEN, THINGSBOARD_PORT))
             {
-                ESP_LOGI("TB", "Unable to connect to ThingsBoard MQTT server");
+                // ESP_LOGI("TB", "Unable to connect to ThingsBoard MQTT server");
+                Serial.println("TB : Unable to connect to ThingsBoard MQTT server");
                 delay(1000);
             }
         }
