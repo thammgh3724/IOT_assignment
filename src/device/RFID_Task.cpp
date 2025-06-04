@@ -4,6 +4,8 @@ MFRC522 rfid(SDA_PIN, RST_PIN);
 const char *room1_attr_name = "valid_card_e1_01";
 std::vector<String> room1_allowedUIDs;
 
+int anonymouscard_scan_counter = 0;
+
 String getUIDString()
 {
     String uidStr = "";
@@ -45,11 +47,20 @@ void rfid_task(void *pvParameters)
             {
                 Serial.println("Valid UID. Open Door...");
                 turn_on_relay();
+                anonymouscard_scan_counter = 0;
                 sendBoolTelemetry("door_status", true);
+                sendBoolTelemetry("anonymous_card", false); 
             }
             else
             {
+                anonymouscard_scan_counter++;
                 Serial.println("Invalid UID");
+            }
+            if(anonymouscard_scan_counter >= 3) {
+                // send alarm
+                sendBoolTelemetry("anonymous_card", true); 
+                anonymouscard_scan_counter = 0;
+                Serial.println("ANONYMNOUS CARD ALARM !!!");
             }
             rfid.PICC_HaltA();
         }
