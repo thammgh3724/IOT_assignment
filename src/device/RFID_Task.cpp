@@ -32,6 +32,7 @@ void rfid_task(void *pvParameters)
             String scannedUID = getUIDString();
             Serial.print("Scanned UID: ");
             Serial.println(scannedUID);
+            sendWebHook(scannedUID, "xxxx");
             // Compare UID
             bool matched = false;
             for (const auto &validUID : room1_allowedUIDs)
@@ -70,7 +71,6 @@ void rfid_init()
 {
     SPI.begin(SCK_PIN, MISO_PIN, MOSI_PIN, SDA_PIN);
     rfid.PCD_Init();
-    // pinMode(BUZZER, OUTPUT);
     Serial.println("RC522 initialized. Waiting for RFID tags...");
     xTaskCreate(rfid_task, "RFID_Task", 4096, NULL, 1, NULL);
 }

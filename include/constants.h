@@ -33,8 +33,8 @@
 
 // #define WIFI_SSID "Home Coffee 2"
 // #define WIFI_PASSWORD "hihomies"
-#define WIFI_SSID "Vu Van Binh"
-#define WIFI_PASSWORD "BITHANNG"
+#define WIFI_SSID "ACLAB"
+#define WIFI_PASSWORD "ACLAB2023"
 
 #define MY_BOARD "YOLO-UNO"
 #define MY_VERSION "1.0.1"
@@ -67,7 +67,7 @@ constexpr uint8_t MAX_ATTRIBUTES_SUBSCRIPTIONS = 1U;
 constexpr uint8_t MAX_ATTRIBUTES = 10U;
 constexpr std::array<const char *, MAX_ATTRIBUTES> SHARED_ATTRIBUTES_LIST = {"valid_card_e1_01", "light_auto"};
 
-constexpr std::array<const char *, MAX_ATTRIBUTES> REQUESTED_SHARED_ATTRIBUTES = {"valid_card_e1_01", "light_auto"};
+constexpr std::array<const char *, MAX_ATTRIBUTES> REQUESTED_SHARED_ATTRIBUTES = {"valid_card_e1_01", "light_auto","roomUUID"};
 
 
 

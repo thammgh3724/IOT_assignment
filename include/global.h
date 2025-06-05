@@ -51,6 +51,7 @@
 #include "constants.h"
 #include "../src/task/Connect_Task.h"
 #include "../src/task/LightAuto_Task.h"
+#include "../src/task/HTTP_Task.h"
 // Include configs
 
 #endif

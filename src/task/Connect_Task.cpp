@@ -12,7 +12,6 @@ const std::array<IAPI_Implementation *, MAX_APIS> apis = {
 WiFiClient wifiClient;
 Arduino_MQTT_Client mqttClient(wifiClient);
 ThingsBoard tbClient(mqttClient, MAX_MESSAGE_RECEIVE_SIZE, MAX_MESSAGE_SEND_SIZE, Default_Max_Stack_Size, apis);
-HTTPClient http;
 void connect_task_init()
 {
     wifi_task();

@@ -1,41 +1,48 @@
 #include "Shared_Attribute_Task.h"
-const std::vector<const char *> REQUESTED_CLIENT_ATTRIBUTES = {"light_status","door_status","fan_status"};
+const std::vector<const char *> REQUESTED_CLIENT_ATTRIBUTES = {"light_status", "door_status", "fan_status"};
 
 void requestTimedOut()
 {
     Serial.printf("Attribute request timed out did not receive a response in (%llu) microseconds. Ensure client is connected to the MQTT broker and that the keys actually exist on the target device\n", REQUEST_TIMEOUT_MICROSECONDS);
 }
 
-void processRoom1Card(const JsonObjectConst &data) {
+void processRoom1Card(const JsonObjectConst &data)
+{
     JsonObjectConst roomData = data[room1_attr_name];
-    if (roomData.isNull()) {
+    if (roomData.isNull())
+    {
         Serial.println("Ivalid Data");
         return;
     }
 
-    if (!roomData.containsKey("rfid_access")) {
+    if (!roomData.containsKey("rfid_access"))
+    {
         Serial.println("No rfid_access field in attribute.");
         return;
     }
 
     room1_allowedUIDs.clear();
     JsonArrayConst rfidArray = roomData["rfid_access"];
-    for (JsonVariantConst uidVal : rfidArray) {
+    for (JsonVariantConst uidVal : rfidArray)
+    {
         String uidStr = uidVal.as<String>();
         room1_allowedUIDs.push_back(uidStr);
         Serial.println("Allowed UID: " + uidStr);
     }
 }
 
-void processLightAuto(const JsonObjectConst &data) {
+void processLightAuto(const JsonObjectConst &data)
+{
     bool state = data["light_auto"];
     Serial.print("Light Auto status: ");
     Serial.println(state ? "ON" : "OFF");
-    if (state) {
+    if (state)
+    {
         light_auto_state = 1;
         Serial.println("Turn on Light Auto feature");
     }
-    else {
+    else
+    {
         light_auto_state = 0;
         Serial.println("Turn off Light Auto feature");
     }
@@ -49,13 +56,16 @@ void processSharedAttributeUpdate(const JsonObjectConst &data)
         Serial.println(it->key().c_str());
         Serial.println(it->value().as<const char *>());
         const char *key = it->key().c_str();
-        if (strcmp(key, room1_attr_name) == 0) {
+        if (strcmp(key, room1_attr_name) == 0)
+        {
             processRoom1Card(data);
         }
-        else if (strcmp(key, "light_auto") == 0) {
+        else if (strcmp(key, "light_auto") == 0)
+        {
             processLightAuto(data);
         }
-        else{
+        else
+        {
             Serial.println("Invalid Attribute.");
             return;
         }
@@ -97,11 +107,13 @@ void processClientAttributeRequest(const JsonObjectConst &data)
             bool state = it->value().as<bool>();
             Serial.print("Light status: ");
             Serial.println(state ? "ON" : "OFF");
-            if (state) {
+            if (state)
+            {
                 turn_on_pixel();
                 Serial.println("Turn on pixel");
             }
-            else {
+            else
+            {
                 turn_off_pixel();
                 Serial.println("Turn off pixel");
             }
@@ -111,11 +123,13 @@ void processClientAttributeRequest(const JsonObjectConst &data)
             bool state = it->value().as<bool>();
             Serial.print("Door status: ");
             Serial.println(state ? "ON" : "OFF");
-            if (state) {
+            if (state)
+            {
                 turn_on_relay();
                 Serial.println("Turn on relay");
             }
-            else {
+            else
+            {
                 turn_off_relay();
                 Serial.println("Turn off relay");
             }
@@ -125,11 +139,13 @@ void processClientAttributeRequest(const JsonObjectConst &data)
             bool state = it->value().as<bool>();
             Serial.print("Fan status: ");
             Serial.println(state ? "ON" : "OFF");
-            if (state) {
+            if (state)
+            {
                 turn_on_fan();
                 Serial.println("Turn on fan");
             }
-            else {
+            else
+            {
                 turn_off_fan();
                 Serial.println("Turn off fan");
             }
@@ -140,7 +156,6 @@ void processClientAttributeRequest(const JsonObjectConst &data)
     serializeJson(data, buffer, jsonSize);
     Serial.println(buffer);
 }
-
 
 bool request_client_attributes()
 {
@@ -163,13 +178,21 @@ void processSharedAttributeRequest(const JsonObjectConst &data)
         // Shared attributes have to be parsed by their type.
         Serial.println(it->value().as<const char *>());
         const char *key = it->key().c_str();
-        if (strcmp(key, room1_attr_name) == 0) {
+        if (strcmp(key, room1_attr_name) == 0)
+        {
             processRoom1Card(data);
         }
-        else if (strcmp(key, "light_auto") == 0) {
+        else if (strcmp(key, "light_auto") == 0)
+        {
             processLightAuto(data);
         }
-        else{
+        else if (strcmp(key, "roomUUID") == 0)
+        {
+            String uuid = data["roomUUID"];
+            Serial.println(uuid);
+        }
+        else
+        {
             Serial.println("Invalid Attribute.");
             return;
         }

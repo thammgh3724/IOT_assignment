@@ -11,7 +11,6 @@ extern Shared_Attribute_Update<MAX_ATTRIBUTES_SUBSCRIPTIONS, MAX_ATTRIBUTES> sha
 extern Attribute_Request<2U, MAX_ATTRIBUTES> attr_request;
 extern const std::array<IAPI_Implementation *, MAX_APIS> apis;
 extern WiFiClient wifiClient;
-extern HTTPClient http;
 extern Arduino_MQTT_Client mqttClient;
 extern ThingsBoard tbClient;
 
