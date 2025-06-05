@@ -6,29 +6,11 @@ void requestTimedOut()
     Serial.printf("Attribute request timed out did not receive a response in (%llu) microseconds. Ensure client is connected to the MQTT broker and that the keys actually exist on the target device\n", REQUEST_TIMEOUT_MICROSECONDS);
 }
 
-void processRoom1Card(const JsonObjectConst &data)
-{
-    JsonObjectConst roomData = data[room1_attr_name];
-    if (roomData.isNull())
-    {
-        Serial.println("Ivalid Data");
-        return;
-    }
-
-    if (!roomData.containsKey("rfid_access"))
-    {
-        Serial.println("No rfid_access field in attribute.");
-        return;
-    }
-
-    room1_allowedUIDs.clear();
-    JsonArrayConst rfidArray = roomData["rfid_access"];
-    for (JsonVariantConst uidVal : rfidArray)
-    {
-        String uidStr = uidVal.as<String>();
-        room1_allowedUIDs.push_back(uidStr);
-        Serial.println("Allowed UID: " + uidStr);
-    }
+void processRoomID(const JsonObjectConst &data) {
+    String uuid = data["roomUUID"];
+    room_attr_name = uuid;
+    Serial.print("Room UUID : ");
+    Serial.println(room_attr_name);
 }
 
 void processLightAuto(const JsonObjectConst &data)
@@ -56,13 +38,13 @@ void processSharedAttributeUpdate(const JsonObjectConst &data)
         Serial.println(it->key().c_str());
         Serial.println(it->value().as<const char *>());
         const char *key = it->key().c_str();
-        if (strcmp(key, room1_attr_name) == 0)
-        {
-            processRoom1Card(data);
-        }
-        else if (strcmp(key, "light_auto") == 0)
+        if (strcmp(key, "light_auto") == 0)
         {
             processLightAuto(data);
+        }
+        else if (strcmp(key, "roomUUID") == 0)
+        {
+            processRoomID(data);
         }
         else
         {
@@ -178,18 +160,13 @@ void processSharedAttributeRequest(const JsonObjectConst &data)
         // Shared attributes have to be parsed by their type.
         Serial.println(it->value().as<const char *>());
         const char *key = it->key().c_str();
-        if (strcmp(key, room1_attr_name) == 0)
-        {
-            processRoom1Card(data);
-        }
-        else if (strcmp(key, "light_auto") == 0)
+        if (strcmp(key, "light_auto") == 0)
         {
             processLightAuto(data);
         }
         else if (strcmp(key, "roomUUID") == 0)
         {
-            String uuid = data["roomUUID"];
-            Serial.println(uuid);
+            processRoomID(data);
         }
         else
         {

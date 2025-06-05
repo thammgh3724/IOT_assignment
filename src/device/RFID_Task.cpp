@@ -1,8 +1,8 @@
 #include "RFID_Task.h"
 MFRC522 rfid(SDA_PIN, RST_PIN);
 
-const char *room1_attr_name = "valid_card_e1_01";
-std::vector<String> room1_allowedUIDs;
+String room_attr_name = "";
+std::vector<String> room_allowedUIDs;
 
 int anonymouscard_scan_counter = 0;
 
@@ -32,10 +32,10 @@ void rfid_task(void *pvParameters)
             String scannedUID = getUIDString();
             Serial.print("Scanned UID: ");
             Serial.println(scannedUID);
-            sendWebHook(scannedUID, "xxxx");
+            sendWebHook(scannedUID, room_attr_name);
             // Compare UID
             bool matched = false;
-            for (const auto &validUID : room1_allowedUIDs)
+            for (const auto &validUID : room_allowedUIDs)
             {
                 if (scannedUID.equalsIgnoreCase(validUID))
                 {

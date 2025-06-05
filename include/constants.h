@@ -65,9 +65,9 @@ constexpr uint16_t FIRMWARE_PACKET_SIZE = 16384U;
 // EXAMPLE constexpr const char RELAY_1_STATUS[] = "relay_1_status";
 constexpr uint8_t MAX_ATTRIBUTES_SUBSCRIPTIONS = 1U;
 constexpr uint8_t MAX_ATTRIBUTES = 10U;
-constexpr std::array<const char *, MAX_ATTRIBUTES> SHARED_ATTRIBUTES_LIST = {"valid_card_e1_01", "light_auto"};
+constexpr std::array<const char *, MAX_ATTRIBUTES> SHARED_ATTRIBUTES_LIST = {"light_auto","roomUUID"};
 
-constexpr std::array<const char *, MAX_ATTRIBUTES> REQUESTED_SHARED_ATTRIBUTES = {"valid_card_e1_01", "light_auto","roomUUID"};
+constexpr std::array<const char *, MAX_ATTRIBUTES> REQUESTED_SHARED_ATTRIBUTES = {"light_auto","roomUUID"};
 
 
 
