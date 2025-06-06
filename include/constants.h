@@ -15,16 +15,14 @@
 
 #define PIR_PIN 10
 
-#define DHT_SDA 11     // Sensor DHT
-#define DHT_SCL 12      // Sensor DHT
-
+#define DHT_SDA 11 // Sensor DHT
+#define DHT_SCL 12 // Sensor DHT
 
 #define MOSI_PIN 17
 #define MISO_PIN 21
 #define RST_PIN 38
 #define SDA_PIN 47
 #define SCK_PIN 48
-
 
 #define DEVICE_TOKEN "wbhpocw2uo37sartan4h"
 
@@ -63,13 +61,11 @@ constexpr uint16_t FIRMWARE_PACKET_SIZE = 16384U;
 /* SHARED ATTRIBUTES */
 // https://github.com/thingsboard/thingsboard-client-sdk/blob/master/examples/0006-esp8266_esp32_process_shared_attribute_update
 // EXAMPLE constexpr const char RELAY_1_STATUS[] = "relay_1_status";
-constexpr uint8_t MAX_ATTRIBUTES_SUBSCRIPTIONS = 1U;
+constexpr uint8_t MAX_ATTRIBUTES_SUBSCRIPTIONS = 3U;
 constexpr uint8_t MAX_ATTRIBUTES = 10U;
-constexpr std::array<const char *, MAX_ATTRIBUTES> SHARED_ATTRIBUTES_LIST = {"light_auto","roomUUID"};
+constexpr std::array<const char *, MAX_ATTRIBUTES> SHARED_ATTRIBUTES_LIST = {"valid_card_e1_01", "light_auto", "roomUUID"};
 
-constexpr std::array<const char *, MAX_ATTRIBUTES> REQUESTED_SHARED_ATTRIBUTES = {"light_auto","roomUUID"};
-
-
+constexpr std::array<const char *, MAX_ATTRIBUTES> REQUESTED_SHARED_ATTRIBUTES = {"valid_card_e1_01", "light_auto", "roomUUID"};
 
 constexpr uint64_t REQUEST_TIMEOUT_MICROSECONDS = 20000U * 1000U;
 #endif

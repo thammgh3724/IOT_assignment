@@ -6,49 +6,62 @@ int fan_state = 0;
 int pixel_state = 0;
 int relay_state = 0;
 
-void turn_on_led() {
+void turn_on_led()
+{
   digitalWrite(LED_PIN, HIGH);
   led_state = 1;
 }
-void turn_off_led() {
+void turn_off_led()
+{
   digitalWrite(LED_PIN, LOW);
   led_state = 0;
 }
 
-void turn_on_fan() {
+void turn_on_fan()
+{
   digitalWrite(FAN_PIN, HIGH);
   fan_state = 1;
 }
-void turn_off_fan() {
+void turn_off_fan()
+{
   digitalWrite(FAN_PIN, LOW);
   fan_state = 0;
 }
 
-void turn_on_pixel() {
+void turn_on_pixel()
+{
   pixels.setPixelColor(0, pixels.Color(0, 150, 0));
   pixels.setPixelColor(1, pixels.Color(0, 150, 0));
   pixels.setPixelColor(2, pixels.Color(0, 150, 0));
   pixels.setPixelColor(3, pixels.Color(0, 150, 0));
+  // pixels.setPixelColor(0, pixels.Color(0, 153, 153));
+  // pixels.setPixelColor(1, pixels.Color(255, 255, 102));
+  // pixels.setPixelColor(2, pixels.Color(255, 0, 0));
+  // pixels.setPixelColor(3, pixels.Color(0, 150, 0));
   pixels.show();
   pixel_state = 1;
 }
 
-void turn_off_pixel() {
+void turn_off_pixel()
+{
   pixels.clear();
   pixels.show();
   pixel_state = 0;
 }
 
-void turn_on_relay() {
+void turn_on_relay()
+{
   digitalWrite(RELAY_PIN, HIGH);
   relay_state = 1;
 }
-void turn_off_relay() {
+void turn_off_relay()
+{
   digitalWrite(RELAY_PIN, LOW);
   relay_state = 0;
 }
 
-void ledFanRelay_init_task(void *pvParameters){
+void ledFanRelay_init_task(void *pvParameters)
+{
   pinMode(LED_PIN, OUTPUT);
   pinMode(FAN_PIN, OUTPUT);
   pinMode(RELAY_PIN, OUTPUT);
@@ -76,7 +89,8 @@ void led_blink_task(void *pvParameters)
   }
 }
 
-void ledFanRelay_init() {
+void ledFanRelay_init()
+{
   xTaskCreate(ledFanRelay_init_task, "ledFanRelay_init_task", 4096, 0, 1, 0);
   xTaskCreate(led_blink_task, "led_blink_task", 4096, 0, 1, 0);
 }

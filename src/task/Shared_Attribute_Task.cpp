@@ -6,7 +6,8 @@ void requestTimedOut()
     Serial.printf("Attribute request timed out did not receive a response in (%llu) microseconds. Ensure client is connected to the MQTT broker and that the keys actually exist on the target device\n", REQUEST_TIMEOUT_MICROSECONDS);
 }
 
-void processRoomID(const JsonObjectConst &data) {
+void processRoomID(const JsonObjectConst &data)
+{
     String uuid = data["roomUUID"];
     room_attr_name = uuid;
     Serial.print("Room UUID : ");
@@ -29,7 +30,26 @@ void processLightAuto(const JsonObjectConst &data)
         Serial.println("Turn off Light Auto feature");
     }
 }
+void processRoomCard(const JsonObjectConst &data)
+{
+    String roomData = data["valid_card_e1_01"];
+    room_allowedUIDs.clear();
+    while (roomData.length() > 0)
+    {
+        int commaIndex = roomData.indexOf(',');
 
+        if (commaIndex == -1)
+        {
+            room_allowedUIDs.push_back(roomData);
+            break;
+        }
+        else
+        {
+            room_allowedUIDs.push_back(roomData.substring(0, commaIndex));
+            roomData = roomData.substring(commaIndex + 1);
+        }
+    }
+}
 void processSharedAttributeUpdate(const JsonObjectConst &data)
 {
 
@@ -45,6 +65,10 @@ void processSharedAttributeUpdate(const JsonObjectConst &data)
         else if (strcmp(key, "roomUUID") == 0)
         {
             processRoomID(data);
+        }
+        else if (strcmp(key, "valid_card_e1_01") == 0)
+        {
+            processRoomCard(data);
         }
         else
         {
@@ -167,6 +191,10 @@ void processSharedAttributeRequest(const JsonObjectConst &data)
         else if (strcmp(key, "roomUUID") == 0)
         {
             processRoomID(data);
+        }
+        else if (strcmp(key, "valid_card_e1_01") == 0)
+        {
+            processRoomCard(data);
         }
         else
         {

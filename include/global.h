@@ -14,6 +14,7 @@
 #include <esp_err.h>
 #include "esp_log.h"
 #include <cstdio>
+#include <sstream>
 // #include "esp_ota_ops.h"
 // #include "esp_wifi.h"
 #include "esp_sntp.h"
